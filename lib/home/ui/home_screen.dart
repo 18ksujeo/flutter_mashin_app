@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
           text: const TextSpan(
             children: [
               TextSpan(
-                text: '마왕',
+                text: '마교',
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 25,
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               TextSpan(
-                text: '컬렉션',
+                text: '조',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,

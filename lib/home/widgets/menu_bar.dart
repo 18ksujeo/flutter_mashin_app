@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/home/ui/home_screen.dart';
+import 'package:flutter_mashin_app/list/ui/product_list_screen.dart';
+import 'package:flutter_mashin_app/purchase/ui/purchase_history_screen.dart';
 
 class MenuScaffold extends StatefulWidget {
   const MenuScaffold({super.key});
@@ -13,9 +15,9 @@ class _MenuBarState extends State<MenuScaffold> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    Placeholder(), // 상품
+    const ProductListScreen(),
     Placeholder(), // 장바구니
-    Placeholder(), // 구매내역
+    const PurchaseHistoryScreen(), // 구매내역
   ];
 
   void _onItemTapped(int index) {
