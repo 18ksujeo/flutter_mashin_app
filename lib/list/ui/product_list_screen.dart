@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/list/logic/mashin_shop_item.dart';
 import 'package:flutter_mashin_app/list/widgets/mashin_app_bar.dart';
-import '../widgets/mashin_filter_buttons.dart';
 import '../widgets/mashin_shop_item_card.dart';
 
 class ProductListScreen extends StatefulWidget {
