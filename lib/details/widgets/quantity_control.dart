@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 class QuantityControl extends StatefulWidget {
   final int unitPrice;
+  final void Function(int) onAddToCart; // Add to Cart callback
+  final void Function(int) onBuyNow; // Buy Now callback
 
-  const QuantityControl({super.key, required this.unitPrice});
+  const QuantityControl({
+    super.key,
+    required this.unitPrice,
+    required this.onAddToCart,
+    required this.onBuyNow,
+  });
 
   @override
   State<QuantityControl> createState() => _QuantityControlState();
@@ -54,18 +61,31 @@ class _QuantityControlState extends State<QuantityControl> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold)),
               const Spacer(),
+            ],
+          ),
+          const SizedBox(height: 32), // Added space between total price and buttons
+          Row(
+            children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent),
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('구매가 완료되었습니다!')),
-                  );
+                  widget.onBuyNow(quantity); // Trigger buy now action
                 },
-                child: const Text('구매하기'),
+                child: const Text('결제하기', style: TextStyle(color: Colors.white)),
+              ),
+              const SizedBox(width: 16),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue),
+                onPressed: () {
+                  widget.onAddToCart(quantity); // Trigger add to cart action
+                },
+                child: const Text('장바구니 담기', style: TextStyle(color: Colors.white)),
               ),
             ],
-          )
+          ),
+          SizedBox(height: 16), // Add space between the buttons and the next widget (if needed)
         ],
       ),
     );

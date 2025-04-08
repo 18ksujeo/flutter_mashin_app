@@ -12,18 +12,31 @@ class ProductImageSection extends StatelessWidget {
       width: double.infinity,
       height: 200,
       child: imageUrl.isNotEmpty
-          ? Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return const Center(
-                  child: Text(
-                    '이미지를 불러올 수 없습니다',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                );
-              },
-            )
+          ? (imageUrl.startsWith('http')
+              ? Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Text(
+                        '이미지를 불러올 수 없습니다',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    );
+                  },
+                )
+              : Image.asset(
+                  imageUrl, // Loading from assets
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Text(
+                        '이미지를 불러올 수 없습니다',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    );
+                  },
+                ))
           : const Center(
               child: Text(
                 'Image',

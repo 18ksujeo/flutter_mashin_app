@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mashin_app/cart/cart_screen.dart';
+import 'package:flutter_mashin_app/cart/ui/cart_screen.dart';
 import 'package:flutter_mashin_app/home/ui/home_screen.dart';
 import 'package:flutter_mashin_app/list/ui/product_list_screen.dart';
 import 'package:flutter_mashin_app/purchase/ui/purchase_history_screen.dart';

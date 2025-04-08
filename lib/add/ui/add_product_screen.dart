@@ -52,7 +52,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Future<void> _handleUpload() async {
     final name = _nameController.text.trim();
     final price = _priceController.text.trim();
-    final desc = _descriptionController.text.trim();
+    final description = _descriptionController.text.trim();
 
     if (name.isEmpty || price.isEmpty) {
       setState(() {
