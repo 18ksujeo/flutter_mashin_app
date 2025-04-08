@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/cart/widgets/cart_item_widget.dart';
 import 'package:flutter_mashin_app/cart/widgets/payment_button.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_mashin_app/cart/logic/cart_provider.dart';
 
 class CartScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> cartItems = [
-    {'productName': 'Item 1', 'price': 29.99, 'quantity': 1},
-    {'productName': 'Item 2', 'price': 49.99, 'quantity': 2},
-    // Add more items as needed
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final cartItems = Provider.of<CartProvider>(context).items.values.toList();
     double totalAmount = cartItems.fold(0.0, (sum, item) {
-      return sum + (item['price'] * item['quantity']);
+      return sum + (item.price * item.quantity);
     });
 
     return Scaffold(
@@ -28,12 +25,12 @@ class CartScreen extends StatelessWidget {
               itemCount: cartItems.length,
               itemBuilder: (context, index) {
                 return CartItemWidget(
-                  productName: cartItems[index]['productName'],
-                  price: cartItems[index]['price'],
-                  quantity: cartItems[index]['quantity'],
+                  productName: cartItems[index].title,
+                  price: cartItems[index].price,
+                  quantity: cartItems[index].quantity,
                   textColor:
                       Colors
-                          .white, // Assuming CartItemWidget can take textColor
+                          .white, onRemove: () { }, // Assuming CartItemWidget can take textColor
                 );
               },
             ),

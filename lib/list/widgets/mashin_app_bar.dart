@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
 class MashinAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MashinAppBar({super.key});
+  final bool automaticallyImplyLeading;
+  const MashinAppBar({super.key, this.automaticallyImplyLeading = true});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.black,
       elevation: 0.5,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.redAccent),
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, '/home');
-        },
-      ),
+      leading: automaticallyImplyLeading
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.redAccent),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+            )
+          : null,
       title: RichText(
         text: TextSpan(
           children: [

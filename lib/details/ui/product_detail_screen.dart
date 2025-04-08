@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/details/widgets/product_image_section.dart';
 import 'package:flutter_mashin_app/details/widgets/product_price_section.dart';
 import 'package:flutter_mashin_app/details/widgets/quantity_control.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_mashin_app/cart/logic/cart_provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final String productName;
   final String imageUrl;
   final String description;
-  final int price;
+  final double price;
 
   const ProductDetailScreen({
     super.key,
@@ -38,6 +40,23 @@ class ProductDetailScreen extends StatelessWidget {
             unitPrice: price,
             onAddToCart: (quantity) {
               // Add to Cart action
+              Provider.of<CartProvider>(context, listen: false).addItem(
+                productName, // Using productName as ID
+                productName,
+                imageUrl,
+                price,
+              );
+              final addedItem = Provider.of<CartProvider>(context, listen: false).items[productName];
+              if (addedItem != null) {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (_) => ListTile(
+                    title: Text(addedItem.title, style: TextStyle(color: Colors.white)),
+                    subtitle: Text('수량: ${addedItem.quantity}개 | 가격: ${addedItem.price}', style: TextStyle(color: Colors.white70)),
+                    tileColor: Colors.black87,
+                  ),
+                );
+              }
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('상품 $quantity개가 장바구니에 추가되었습니다!')),
               );

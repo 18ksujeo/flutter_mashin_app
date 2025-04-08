@@ -113,7 +113,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '장바구니 담기',
+          '상품등록',
           style: TextStyle(
             color: Colors.white,
             fontSize: 22,
@@ -121,6 +121,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           ),
         ),
         backgroundColor: Colors.black,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Stack(
         children: [

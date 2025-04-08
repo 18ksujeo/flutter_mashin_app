@@ -24,7 +24,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         allItems.where((item) => item.type == selectedFilter).toList();
 
     return Scaffold(
-      appBar: const MashinAppBar(),
+      appBar: const MashinAppBar(automaticallyImplyLeading: false),
       backgroundColor: Colors.black,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,8 +45,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 return GestureDetector(
                   onTap: () {
                     // Handle price parsing
-                    final parsedPrice = int.tryParse(item.price.replaceAll(',', ''));
-                    final price = parsedPrice ?? 0;
+                    final parsedPrice = double.tryParse(item.price.replaceAll(',', ''));
+                    final price = parsedPrice ?? 0.0;
 
                     // If parsing fails, show a SnackBar with an error message
                     if (parsedPrice == null) {

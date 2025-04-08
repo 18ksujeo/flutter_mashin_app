@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class QuantityControl extends StatefulWidget {
-  final int unitPrice;
+  final double unitPrice; // Changed from int to double
   final void Function(int) onAddToCart; // Add to Cart callback
   final void Function(int) onBuyNow; // Buy Now callback
 
@@ -21,7 +21,7 @@ class _QuantityControlState extends State<QuantityControl> {
 
   @override
   Widget build(BuildContext context) {
-    final int totalPrice = widget.unitPrice * quantity;
+    final double totalPrice = widget.unitPrice * quantity; // Changed from int to double
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -55,7 +55,7 @@ class _QuantityControlState extends State<QuantityControl> {
           const SizedBox(height: 16),
           Row(
             children: [
-              Text('총 금액: ₩$totalPrice',
+              Text('총 금액: ₩${totalPrice.toStringAsFixed(2)}', // Updated to format double
                   style: const TextStyle(
                       color: Colors.redAccent,
                       fontSize: 16,
@@ -80,6 +80,7 @@ class _QuantityControlState extends State<QuantityControl> {
                     backgroundColor: Colors.blue),
                 onPressed: () {
                   widget.onAddToCart(quantity); // Trigger add to cart action
+                  Navigator.pushNamed(context, '/cart');
                 },
                 child: const Text('장바구니 담기', style: TextStyle(color: Colors.white)),
               ),
