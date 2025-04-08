@@ -52,10 +52,6 @@ class MashinShopItemCard extends StatelessWidget {
             style: const TextStyle(color: Colors.white, fontSize: 10),
             textAlign: TextAlign.center,
           ),
-          IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
-            onPressed: onDelete,
-          ),
         ],
       ),
     );

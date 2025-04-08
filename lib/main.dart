@@ -13,7 +13,6 @@ import 'package:flutter_mashin_app/add/ui/add_product_screen.dart';
 import 'package:flutter_mashin_app/home/logic/user_provider.dart';
 import 'package:flutter_mashin_app/home/widgets/menu_bar.dart';
 import 'package:flutter_mashin_app/cart/logic/cart_provider.dart';
-import 'package:flutter_mashin_app/list/ui/product_list_screen.dart';  // Add product list screen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

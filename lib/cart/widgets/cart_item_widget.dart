@@ -20,6 +20,8 @@ class CartItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double totalPrice = price * quantity;
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       color: Colors.white,
@@ -32,7 +34,7 @@ class CartItemWidget extends StatelessWidget {
                 : Image.asset(imageUrl, width: 60, height: 60, fit: BoxFit.cover),
         title: Text(productName, style: TextStyle(color: Colors.red)),
         subtitle: Text(
-          "가격: \$${price.toStringAsFixed(2)} | 수량: $quantity",
+          "가격: \$${totalPrice.toStringAsFixed(2)} | 수량: $quantity",
           style: TextStyle(color: Colors.red),
         ),
         trailing: IconButton(

@@ -53,9 +53,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
     final String price = _priceController.text.trim();
     final String description = _descriptionController.text.trim();
 
-    if (name.isEmpty || price.isEmpty) {
+    if (name.isEmpty || price.isEmpty || description.isEmpty) {
       setState(() {
-        _errorText = '상품명과 가격은 필수 입력사항입니다.';
+        _errorText = '상품명, 가격, 상품 설명은 필수 입력사항입니다.';
       });
       return;
     }
@@ -67,13 +67,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
       return;
     }
 
-    // 상품 정보를 ProductListScreen으로 전달하고 로컬에 저장하는 로직 추가
+    // 상품 정보를 ProductDetailScreen으로 전달하고 로컬에 저장하는 로직 추가
     Navigator.pop(context, {
       'name': name,
       'price': price,
       'type': '신도',
       'image': _selectedImage!.path,
-      'description': description,
+      'description': description, // 상품 설명 추가
     });
   }
 

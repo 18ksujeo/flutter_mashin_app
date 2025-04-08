@@ -17,6 +17,7 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('장바구니', style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white), // Change back button color to white
       ),
       body: Column(
         children: [

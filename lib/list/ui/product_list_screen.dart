@@ -107,12 +107,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     });
                   },
                   child: MashinShopItemCard(
-                    item: item,
-                    onDelete: () {
-                      _deleteProduct(item.productId);
-                      setState(() {}); // Ensure UI is updated after deletion
-                      Navigator.pop(context); // Return to the previous screen
-                    },
+                    item: item, onDelete: () {  },
                   ),
                 );
               },

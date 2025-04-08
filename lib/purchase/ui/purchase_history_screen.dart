@@ -35,6 +35,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
             ],
           ),
         ),
+        iconTheme: IconThemeData(color: Colors.white), // 뒤로가기 버튼 색상 변경
       ),
       body: Consumer<CartProvider>(
         builder: (context, cartProvider, _) {
@@ -63,7 +64,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
                           : Image.asset(item.imageUrl, width: 60, height: 60, fit: BoxFit.cover),
                   title: Text(item.title, style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
                   subtitle: Text(
-                    '수량: ${item.quantity}개\n가격: \$${item.price.toStringAsFixed(2)}',
+                    '수량: ${item.quantity}개\n가격: \$${item.price.toStringAsFixed(2)}\n설명: ${item.description}', // 상품 설명 추가
                     style: const TextStyle(color: Colors.black87),
                   ),
                 ),

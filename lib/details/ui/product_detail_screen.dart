@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/details/widgets/product_image_section.dart';
 import 'package:flutter_mashin_app/details/widgets/product_price_section.dart';
 import 'package:flutter_mashin_app/details/widgets/quantity_control.dart';
+import 'package:flutter_mashin_app/details/widgets/description_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_mashin_app/cart/logic/cart_provider.dart';
 
@@ -36,6 +37,10 @@ class ProductDetailScreen extends StatelessWidget {
             description: description,
             price: price,
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: DescriptionWidget(description: description), // Using DescriptionWidget for product description
+          ),
           QuantityControl(
             unitPrice: price,
             imageUrl: imageUrl,
@@ -46,6 +51,7 @@ class ProductDetailScreen extends StatelessWidget {
                 productName,
                 imageUrl,
                 price,
+                quantity, // Pass quantity to addItem
               );
               final addedItem = Provider.of<CartProvider>(context, listen: false).items[productName];
               if (addedItem != null) {
@@ -53,19 +59,19 @@ class ProductDetailScreen extends StatelessWidget {
                   context: context,
                   builder: (_) => ListTile(
                     title: Text(addedItem.title, style: TextStyle(color: Colors.white)),
-                    subtitle: Text('수량: ${addedItem.quantity}개 | 가격: ${addedItem.price}', style: TextStyle(color: Colors.white70)),
+                    subtitle: Text('수량: ${addedItem.quantity}개 | 가격: ${addedItem.price * addedItem.quantity}', style: TextStyle(color: Colors.white)),
                     tileColor: Colors.black87,
                   ),
                 );
               }
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('상품 $quantity개가 장바구니에 추가되었습니다!')),
+                SnackBar(content: Text('상품 $quantity개가 장바구니에 추가되었습니다!', style: TextStyle(color: Colors.white))),
               );
             },
             onBuyNow: (quantity) {
               // Buy Now action
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('상품 $quantity개가 구매되었습니다!')),
+                SnackBar(content: Text('상품 $quantity개가 구매되었습니다!', style: TextStyle(color: Colors.white))),
               );
             },
           ),

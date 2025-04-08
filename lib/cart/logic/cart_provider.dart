@@ -8,7 +8,7 @@ class CartProvider with ChangeNotifier {
   Map<String, CartItem> get items => _items;
   List<CartItem> get purchaseHistory => _purchaseHistory;
 
-  void addItem(String id, String title, String imageUrl, double price) {
+  void addItem(String id, String title, String imageUrl, double price, int quantity) {
     if (_items.containsKey(id)) {
       _items.update(
         id,
@@ -17,7 +17,7 @@ class CartProvider with ChangeNotifier {
           title: existingItem.title,
           imageUrl: existingItem.imageUrl,
           price: existingItem.price,
-          quantity: existingItem.quantity + 1,
+          quantity: existingItem.quantity + quantity,
         ),
       );
     } else {
@@ -28,7 +28,7 @@ class CartProvider with ChangeNotifier {
           title: title,
           imageUrl: imageUrl,
           price: price,
-          quantity: 1,
+          quantity: quantity,
         ),
       );
     }
@@ -44,6 +44,10 @@ class CartProvider with ChangeNotifier {
     _purchaseHistory.addAll(_items.values);
     _items.clear();
     notifyListeners();
+  }
+
+  double get totalPrice {
+    return _items.values.fold(0.0, (sum, item) => sum + (item.price * item.quantity));
   }
 
   void removeItem(String productName) {}

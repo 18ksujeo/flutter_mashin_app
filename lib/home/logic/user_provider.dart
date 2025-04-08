@@ -23,4 +23,6 @@ class UserProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void loadUserProfile() {}
 }

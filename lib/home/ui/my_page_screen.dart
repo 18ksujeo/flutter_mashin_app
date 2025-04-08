@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyPageScreen extends StatefulWidget {
   final UserProfile? profileToEdit;
@@ -25,14 +26,19 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   void initState() {
     super.initState();
-    final profile = widget.profileToEdit;
-    if (profile != null) {
-      _nameController.text = profile.name;
-      _roleController.text = profile.role;
-      _phoneController.text = profile.phone;
-      _bioController.text = profile.bio;
-      _imagePath = profile.imageUrl;
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadProfile();
+    });
+  }
+
+  Future<void> _loadProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    _nameController.text = prefs.getString('name') ?? '';
+    _roleController.text = prefs.getString('role') ?? '';
+    _phoneController.text = prefs.getString('phone') ?? '';
+    _bioController.text = prefs.getString('bio') ?? '';
+    _imagePath = prefs.getString('imageUrl') ?? '';
+    setState(() {});
   }
 
   @override
@@ -54,7 +60,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
     }
   }
 
-  void _saveProfile() {
+  void _saveProfile() async {
     final uuid = Uuid();
     final profile = UserProfile(
       id: widget.profileToEdit?.id ?? uuid.v4(),
@@ -72,6 +78,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
     } else {
       userProvider.addProfile(profile);
     }
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', profile.name);
+    await prefs.setString('role', profile.role);
+    await prefs.setString('phone', profile.phone);
+    await prefs.setString('bio', profile.bio);
+    await prefs.setString('imageUrl', profile.imageUrl);
 
     Navigator.pop(context);
   }
