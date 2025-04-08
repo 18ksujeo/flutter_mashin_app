@@ -10,4 +10,6 @@ class MashinShopItem {
     required this.price,
     required this.type,
   });
+
+  get description => null;
 }

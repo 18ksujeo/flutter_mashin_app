@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mashin_app/cart/cart_screen.dart';
 import 'package:flutter_mashin_app/home/ui/home_screen.dart';
 import 'package:flutter_mashin_app/list/ui/product_list_screen.dart';
 import 'package:flutter_mashin_app/purchase/ui/purchase_history_screen.dart';
@@ -16,7 +17,7 @@ class _MenuBarState extends State<MenuScaffold> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const ProductListScreen(),
-    Placeholder(), // 장바구니
+    CartScreen(), // 장바구니 화면 추가
     const PurchaseHistoryScreen(), // 구매내역
   ];
 
@@ -39,8 +40,14 @@ class _MenuBarState extends State<MenuScaffold> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: '상품'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: '장바구니'),
-          BottomNavigationBarItem(icon: Icon(Icons.receipt_long), label: '구매내역'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: '장바구니',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_long),
+            label: '구매내역',
+          ),
         ],
       ),
     );

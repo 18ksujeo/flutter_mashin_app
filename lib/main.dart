@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mashin_app/details/ui/product_detail_screen.dart';
 import 'package:provider/provider.dart';
-
 import 'auth/logic/auth_provider.dart';
 import 'auth/ui/login_screen.dart' as login;
 import 'auth/ui/signup_screen.dart';
 import 'auth/ui/splash_screen.dart';
-
 import 'package:flutter_mashin_app/add/ui/add_product_screen.dart';
-import 'package:flutter_mashin_app/details/product_detail_page.dart';
 import 'package:flutter_mashin_app/home/logic/user_provider.dart';
-import 'package:flutter_mashin_app/home/ui/home_screen.dart';
 import 'package:flutter_mashin_app/home/widgets/menu_bar.dart';
 
 void main() {
@@ -39,6 +36,26 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUpScreen(),
         '/home': (context) => const MenuScaffold(),
         '/add_product': (context) => const AddProductScreen(),
+      },
+      onGenerateRoute: (settings) {
+        final args = settings.arguments;
+        switch (settings.name) {
+          case '/product_detail':
+            if (args is Map<String, dynamic>) {
+              final price = int.tryParse(args['price'].toString()) ?? 0; // Safely convert price to int
+              return MaterialPageRoute(
+                builder: (context) => ProductDetailScreen(
+                  productName: args['productName'],
+                  imageUrl: args['imageUrl'],
+                  description: args['description'],
+                  price: price,  // Pass the correctly parsed price
+                ),
+              );
+            }
+            return null;
+          default:
+            return null;
+        }
       },
     );
   }
