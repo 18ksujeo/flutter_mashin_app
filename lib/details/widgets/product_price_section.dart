@@ -29,7 +29,7 @@ class ProductPriceSection extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            '₩${price.toString()}',
+            '\$${price.toString()}',
             style: const TextStyle(
               color: Colors.redAccent,
               fontSize: 18,

@@ -55,7 +55,7 @@ class _QuantityControlState extends State<QuantityControl> {
           const SizedBox(height: 16),
           Row(
             children: [
-              Text('총 금액: ₩${totalPrice.toStringAsFixed(2)}', // Updated to format double
+              Text('총 금액: \$${totalPrice.toStringAsFixed(2)}', // Updated to format double
                   style: const TextStyle(
                       color: Colors.redAccent,
                       fontSize: 16,

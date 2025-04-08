@@ -46,7 +46,7 @@ class MashinShopItemCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            '가격 ${item.price}원',
+            '가격 \$${item.price}',
             style: const TextStyle(color: Colors.white, fontSize: 10),
             textAlign: TextAlign.center,
           ),
