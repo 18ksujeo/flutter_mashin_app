@@ -38,6 +38,7 @@ class ProductDetailScreen extends StatelessWidget {
           ),
           QuantityControl(
             unitPrice: price,
+            imageUrl: imageUrl,
             onAddToCart: (quantity) {
               // Add to Cart action
               Provider.of<CartProvider>(context, listen: false).addItem(

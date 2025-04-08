@@ -9,7 +9,7 @@ class QuantityControl extends StatefulWidget {
     super.key,
     required this.unitPrice,
     required this.onAddToCart,
-    required this.onBuyNow,
+    required this.onBuyNow, required String imageUrl,
   });
 
   @override

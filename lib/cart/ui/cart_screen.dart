@@ -28,9 +28,9 @@ class CartScreen extends StatelessWidget {
                   productName: cartItems[index].title,
                   price: cartItems[index].price,
                   quantity: cartItems[index].quantity,
-                  textColor:
-                      Colors
-                          .white, onRemove: () { }, // Assuming CartItemWidget can take textColor
+                  textColor: Colors.white,
+                  onRemove: () { },
+                  imageUrl: cartItems[index].imageUrl,
                 );
               },
             ),

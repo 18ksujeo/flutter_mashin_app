@@ -86,7 +86,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 name: result['name'],
                 price: result['price'],
                 type: result['type'],
-                imageAssetPath: result['image'],
+                imageAssetPath: result['image'], // Ensure imageAssetPath is passed correctly
               ));
               selectedFilter = result['type'];
             });

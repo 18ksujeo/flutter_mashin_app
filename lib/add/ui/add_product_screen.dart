@@ -76,7 +76,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       'name': name,
       'price': price,
       'type': '신도', // 기본 타입 또는 선택값으로 바꿀 수 있음
-      'image': _selectedImage!.path,
+      'image': _selectedImage!.path.toString(),
     });
   }
 
@@ -193,13 +193,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     buildInput(hint: "상품명", controller: _nameController),
                     const SizedBox(height: 12),
                     buildInput(
-                      hint: "가격 (₩)",
+                      hint: "가격",
                       controller: _priceController,
                       inputType: TextInputType.number,
                     ),
                     const SizedBox(height: 12),
                     buildInput(
-                      hint: "상품 설명 (선택)",
+                      hint: "상품 설명",
                       controller: _descriptionController,
                       maxLines: 3,
                     ),
