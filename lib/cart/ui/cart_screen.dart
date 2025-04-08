@@ -29,7 +29,9 @@ class CartScreen extends StatelessWidget {
                   price: cartItems[index].price,
                   quantity: cartItems[index].quantity,
                   textColor: Colors.white,
-                  onRemove: () { },
+                  onRemove: () {
+                    Provider.of<CartProvider>(context, listen: false).removeItem(cartItems[index].id);
+                  },
                   imageUrl: cartItems[index].imageUrl,
                 );
               },
@@ -43,4 +45,8 @@ class CartScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+extension on CartProvider {
+  void removeItem(String id) {}
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/details/ui/product_detail_screen.dart';
 import 'package:flutter_mashin_app/cart/ui/cart_screen.dart';
+import 'package:flutter_mashin_app/purchase/ui/purchase_history_screen.dart';
 import 'package:provider/provider.dart';
 import 'auth/logic/auth_provider.dart';
 import 'auth/ui/login_screen.dart' as login;
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const MenuScaffold(),
         '/add_product': (context) => const AddProductScreen(),
         '/cart': (context) => CartScreen(),
+        '/purchase_history': (context) => const PurchaseHistoryScreen(),
       },
       onGenerateRoute: (settings) {
         final args = settings.arguments;
