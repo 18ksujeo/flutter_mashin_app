@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/details/ui/product_detail_screen.dart';
 import 'package:flutter_mashin_app/cart/ui/cart_screen.dart';
 import 'package:flutter_mashin_app/purchase/ui/purchase_history_screen.dart';
+import 'package:flutter_mashin_app/storage/product_storage.dart';
 import 'package:provider/provider.dart';
 import 'auth/logic/auth_provider.dart';
 import 'auth/ui/login_screen.dart' as login;
@@ -11,8 +12,11 @@ import 'package:flutter_mashin_app/add/ui/add_product_screen.dart';
 import 'package:flutter_mashin_app/home/logic/user_provider.dart';
 import 'package:flutter_mashin_app/home/widgets/menu_bar.dart';
 import 'package:flutter_mashin_app/cart/logic/cart_provider.dart';
+import 'package:flutter_mashin_app/list/ui/product_list_screen.dart';  // Add product list screen
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ProductStorage.init(); // Initialize local storage
   runApp(
     MultiProvider(
       providers: [
@@ -42,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/add_product': (context) => const AddProductScreen(),
         '/cart': (context) => CartScreen(),
         '/purchase_history': (context) => const PurchaseHistoryScreen(),
+        '/product_list': (context) => const ProductListScreen(),  // Add product list route
       },
       onGenerateRoute: (settings) {
         final args = settings.arguments;

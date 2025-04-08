@@ -3,6 +3,7 @@ import 'package:flutter_mashin_app/details/ui/product_detail_screen.dart';
 import 'package:flutter_mashin_app/list/logic/mashin_shop_item.dart';
 import 'package:flutter_mashin_app/list/widgets/mashin_app_bar.dart';
 import '../widgets/mashin_shop_item_card.dart';
+import 'package:flutter_mashin_app/storage/product_storage.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -12,17 +13,45 @@ class ProductListScreen extends StatefulWidget {
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-  String selectedFilter = '마신주교';
-
-  final List<MashinShopItem> allItems = [];
-
+  List<MashinShopItem> allItems = [];
   int _selectedNavIndex = 1;
 
   @override
-  Widget build(BuildContext context) {
-    List<MashinShopItem> filteredItems =
-        allItems.where((item) => item.type == selectedFilter).toList();
+  void initState() {
+    super.initState();
+    _loadProducts();
+  }
 
+  Future<void> _loadProducts() async {
+    final products = await ProductStorage.loadProducts();
+    setState(() {
+      allItems = products.map((product) => MashinShopItem(
+        name: product['productName'],
+        price: product['price'],
+        type: product['type'],
+        imageAssetPath: product['imageUrl'], // Ensure the image path is correctly set
+      )).toList();
+    });
+  }
+
+  void _addProduct(MashinShopItem item) {
+    setState(() {
+      allItems.add(item);
+    });
+    _saveProducts();
+  }
+
+  Future<void> _saveProducts() async {
+    await ProductStorage.saveProducts(allItems.map((item) => {
+      'productName': item.name,
+      'price': item.price,
+      'type': item.type,
+      'imageUrl': item.imageAssetPath, // Ensure the image path is correctly saved
+    }).toList());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MashinAppBar(automaticallyImplyLeading: false),
       backgroundColor: Colors.black,
@@ -39,31 +68,27 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 mainAxisSpacing: 8,
                 childAspectRatio: 0.75,
               ),
-              itemCount: filteredItems.length,
+              itemCount: allItems.length,
               itemBuilder: (context, index) {
-                final item = filteredItems[index];
+                final item = allItems[index];
                 return GestureDetector(
                   onTap: () {
-                    // Handle price parsing
-                    final parsedPrice = double.tryParse(item.price.replaceAll(',', ''));
-                    final price = parsedPrice ?? 0.0;
+                    final parsedPrice = double.tryParse(item.price.replaceAll(',', '')) ?? 0.0;
 
-                    // If parsing fails, show a SnackBar with an error message
-                    if (parsedPrice == null) {
+                    if (parsedPrice == 0.0) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Error parsing price, using default value of 0.")),
                       );
                     }
 
-                    // Navigate to product detail page
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ProductDetailScreen(
                           productName: item.name,
-                          imageUrl: item.imageAssetPath,
-                          description: 'Description of ${item.name}', // Placeholder for description
-                          price: price,
+                          imageUrl: item.imageAssetPath, // Ensure the image URL is correctly passed
+                          description: 'Description of ${item.name}',
+                          price: parsedPrice,
                         ),
                       ),
                     );
@@ -77,19 +102,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // Navigate to the add product page
           final result = await Navigator.pushNamed(context, '/add_product');
-          if (result != null && result is Map<String, dynamic>) {
-            setState(() {
-              // Add the new product to the list
-              allItems.add(MashinShopItem(
-                name: result['name'],
-                price: result['price'],
-                type: result['type'],
-                imageAssetPath: result['image'], // Ensure imageAssetPath is passed correctly
-              ));
-              selectedFilter = result['type'];
-            });
+          if (result is Map<String, dynamic>) {
+            final newItem = MashinShopItem(
+              name: result['name'],
+              price: result['price'],
+              type: result['type'],
+              imageAssetPath: result['image'], // Ensure the image path is correctly set
+            );
+            _addProduct(newItem);
           }
         },
         backgroundColor: Colors.redAccent,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mashin_app/add/ui/add_product_screen.dart'; // Added import
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -12,10 +11,10 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _priceController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _imagePicker = ImagePicker();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final ImagePicker _imagePicker = ImagePicker();
   File? _selectedImage;
   String? _errorText;
 
@@ -50,9 +49,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   Future<void> _handleUpload() async {
-    final name = _nameController.text.trim();
-    final price = _priceController.text.trim();
-    final description = _descriptionController.text.trim();
+    final String name = _nameController.text.trim();
+    final String price = _priceController.text.trim();
+    final String description = _descriptionController.text.trim();
 
     if (name.isEmpty || price.isEmpty) {
       setState(() {
@@ -68,19 +67,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
       return;
     }
 
-    setState(() {
-      _errorText = null;
-    });
-
+    // 상품 정보를 ProductListScreen으로 전달하고 로컬에 저장하는 로직 추가
     Navigator.pop(context, {
       'name': name,
       'price': price,
-      'type': '신도', // 기본 타입 또는 선택값으로 바꿀 수 있음
-      'image': _selectedImage!.path.toString(),
+      'type': '신도',
+      'image': _selectedImage!.path,
+      'description': description,
     });
   }
 
-  Widget buildInput({
+  Widget _buildInput({
     required String hint,
     required TextEditingController controller,
     TextInputType? inputType,
@@ -121,11 +118,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
           ),
         ),
         backgroundColor: Colors.black,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Stack(
         children: [
-          Container(color: Colors.black), // Full black background
+          Container(color: Colors.black),
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -134,7 +131,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // 이미지 선택 영역
                     GestureDetector(
                       onTap: _pickImage,
                       child: Container(
@@ -190,15 +186,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           ),
                         ),
                       ),
-                    buildInput(hint: "상품명", controller: _nameController),
+                    _buildInput(hint: "상품명", controller: _nameController),
                     const SizedBox(height: 12),
-                    buildInput(
+                    _buildInput(
                       hint: "가격",
                       controller: _priceController,
                       inputType: TextInputType.number,
                     ),
                     const SizedBox(height: 12),
-                    buildInput(
+                    _buildInput(
                       hint: "상품 설명",
                       controller: _descriptionController,
                       maxLines: 3,

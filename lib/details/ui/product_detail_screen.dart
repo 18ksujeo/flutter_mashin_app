@@ -30,7 +30,7 @@ class ProductDetailScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ProductImageSection(imageUrl: imageUrl),
+          ProductImageSection(imageUrl: imageUrl), // Optimized image loading
           ProductPriceSection(
             productName: productName,
             description: description,

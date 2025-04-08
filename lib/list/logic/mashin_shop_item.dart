@@ -12,4 +12,6 @@ class MashinShopItem {
   });
 
   get description => null;
+
+  void toMap() {}
 }
