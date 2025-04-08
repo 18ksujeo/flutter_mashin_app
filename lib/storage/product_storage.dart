@@ -25,5 +25,20 @@ class ProductStorage {
     return [];
   }
 
-  static void saveProduct(MashinShopItem item) {}
+  static Future<void> saveProduct(MashinShopItem item) async {
+    List<Map<String, dynamic>> products = loadProducts();
+    products.add(item.toMap());
+    await saveProducts(products);
+  }
+
+  static Future<void> deleteProduct(String productId) async {
+    List<Map<String, dynamic>> products = loadProducts();
+    products.removeWhere((product) => product['id'] == productId);
+    await saveProducts(products);
+  }
+
+  // 상품 리스트 삭제
+  static Future<void> clearProducts() async {
+    await _prefs.remove('products');
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/details/ui/product_detail_screen.dart';
 import 'package:flutter_mashin_app/cart/ui/cart_screen.dart';
+import 'package:flutter_mashin_app/list/logic/ProductListProvider.dart';
 import 'package:flutter_mashin_app/purchase/ui/purchase_history_screen.dart';
 import 'package:flutter_mashin_app/storage/product_storage.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => ProductListProvider()),  // Add ProductListProvider
       ],
       child: const MyApp(),
     ),
@@ -46,7 +48,6 @@ class MyApp extends StatelessWidget {
         '/add_product': (context) => const AddProductScreen(),
         '/cart': (context) => CartScreen(),
         '/purchase_history': (context) => const PurchaseHistoryScreen(),
-        '/product_list': (context) => const ProductListScreen(),  // Add product list route
       },
       onGenerateRoute: (settings) {
         final args = settings.arguments;

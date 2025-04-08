@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mashin_app/list/logic/mashin_shop_item.dart';
+
 class MashinShopItemCard extends StatelessWidget {
   final MashinShopItem item;
+  final VoidCallback onDelete;
 
-  const MashinShopItemCard({super.key, required this.item});
+  const MashinShopItemCard({super.key, required this.item, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,10 @@ class MashinShopItemCard extends StatelessWidget {
             '가격 \$${item.price}',
             style: const TextStyle(color: Colors.white, fontSize: 10),
             textAlign: TextAlign.center,
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete, color: Colors.red),
+            onPressed: onDelete,
           ),
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:flutter_mashin_app/list/logic/mashin_shop_item.dart';
 import 'package:flutter_mashin_app/list/widgets/mashin_app_bar.dart';
 import '../widgets/mashin_shop_item_card.dart';
 import 'package:flutter_mashin_app/storage/product_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class ProductListScreen extends StatefulWidget {
   const ProductListScreen({super.key});
@@ -29,7 +30,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
         name: product['productName'],
         price: product['price'],
         type: product['type'],
-        imageAssetPath: product['imageUrl'], // Ensure the image path is correctly set
+        imageAssetPath: product['imageUrl'], 
+        productId: Uuid().v4(), // Generate a unique product ID
       )).toList();
     });
   }
@@ -41,12 +43,19 @@ class _ProductListScreenState extends State<ProductListScreen> {
     _saveProducts();
   }
 
+  void _deleteProduct(String productId) {
+    setState(() {
+      allItems.removeWhere((item) => item.productId == productId);
+    });
+    _saveProducts();
+  }
+
   Future<void> _saveProducts() async {
     await ProductStorage.saveProducts(allItems.map((item) => {
       'productName': item.name,
       'price': item.price,
       'type': item.type,
-      'imageUrl': item.imageAssetPath, // Ensure the image path is correctly saved
+      'imageUrl': item.imageAssetPath, 
     }).toList());
   }
 
@@ -86,14 +95,25 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       MaterialPageRoute(
                         builder: (context) => ProductDetailScreen(
                           productName: item.name,
-                          imageUrl: item.imageAssetPath, // Ensure the image URL is correctly passed
+                          imageUrl: item.imageAssetPath, 
                           description: 'Description of ${item.name}',
                           price: parsedPrice,
                         ),
                       ),
-                    );
+                    ).then((_) {
+                      setState(() {
+                        // Refresh the list if necessary
+                      });
+                    });
                   },
-                  child: MashinShopItemCard(item: item),
+                  child: MashinShopItemCard(
+                    item: item,
+                    onDelete: () {
+                      _deleteProduct(item.productId);
+                      setState(() {}); // Ensure UI is updated after deletion
+                      Navigator.pop(context); // Return to the previous screen
+                    },
+                  ),
                 );
               },
             ),
@@ -108,7 +128,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
               name: result['name'],
               price: result['price'],
               type: result['type'],
-              imageAssetPath: result['image'], // Ensure the image path is correctly set
+              imageAssetPath: result['image'], 
+              productId: Uuid().v4(), // Generate a unique product ID
             );
             _addProduct(newItem);
           }

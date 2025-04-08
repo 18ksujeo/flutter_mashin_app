@@ -45,4 +45,6 @@ class CartProvider with ChangeNotifier {
     _items.clear();
     notifyListeners();
   }
+
+  void removeItem(String productName) {}
 }
